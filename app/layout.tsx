@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Calistoga, Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
-
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-poppins" });
+const calistoga = Calistoga({ subsets: ["latin"], weight: "400", variable: "--font-calistoga" });
 export const metadata: Metadata = {
   title: {
     default: "Dash | Manage your finances",
@@ -45,7 +47,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          inter.variable,
+          poppins.variable,
+          calistoga.variable,
+          "font-inter"
+        )}
+      >
+        {children}
+      </body>
     </html>
   );
 }
