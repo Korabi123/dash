@@ -54,7 +54,7 @@ export default function RootLayout({
             inter.variable,
             poppins.variable,
             calistoga.variable,
-            "font-inter"
+            "font-inter antialiased"
           )}
         >
           {children}
