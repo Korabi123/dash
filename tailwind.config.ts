@@ -57,6 +57,12 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "branding-primary": {
+          DEFAULT: "hsl(212.17, 92.16%, 50%)",
+        },
+        "branding-secondary": {
+          DEFAULT: "hsl(211.97, 91.95%, 29.22%)",
+        }
       },
       borderRadius: {
         lg: "var(--radius)",
