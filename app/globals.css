@@ -67,3 +67,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/*? Clerk Styling */
+.cl-internal-1dauvpw {
+  display: none;
+}
+
+.cl-internal-ttumny[data-variant="solid"][data-color="primary"]:focus {
+  box-shadow: rgb(10, 120, 245) 0px 0px 0px 1px, rgba(255, 255, 255, 0.07) 0px 1px 1px 0px inset, rgba(34, 42, 53, 0.2) 0px 2px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 1px 0px, rgba(0, 0, 0, 0.15) 0px 0px 0px 4px;
+}
+
+.cl-internal-1pphsl9[data-variant="solid"][data-color="primary"] {
+  box-shadow: rgb(10, 120, 245) 0px 0px 0px 1px, rgba(255, 255, 255, 0.07) 0px 1px 1px 0px inset, rgba(34, 42, 53, 0.2) 0px 2px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 1px 0px;
+}
+
+.cl-internal-ttumny[data-variant="solid"][data-color="primary"] {
+  box-shadow: rgb(10, 120, 245) 0px 0px 0px 1px, rgba(255, 255, 255, 0.07) 0px 1px 1px 0px inset, rgba(34, 42, 53, 0.2) 0px 2px 3px 0px, rgba(0, 0, 0, 0.24) 0px 1px 1px 0px;
+}
