@@ -75,75 +75,77 @@ export function PieChart() {
   console.log(chartConfig);
 
   return (
-    <ChartContainer config={chartConfig} className="mx-auto aspect-square">
-      <PieChartRecharts>
-        <ChartTooltip
-          cursor={false}
-          content={
-            <ChartTooltipContent
-              indicator="line"
-              hideLabel
-              showDate
-              date={ammount}
-              className="w-[180px]"
-              formatter={(value, name, item, index) => {
-                return (
-                  <>
-                    <div
-                      className="h-4.5 w-1 shrink-0 rounded-[2px] bg-[--color-bg]"
-                      style={
-                        {
-                          "--color-bg": `var(--color-${name})`,
-                        } as React.CSSProperties
-                      }
-                    />
-                    {chartConfig[name as keyof typeof chartConfig]?.label ||
-                      name}
-                    <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
-                      {value}
-                      <span className="text-xs font-normal text-muted-foreground">
-                        %
-                      </span>
-                      {(() => {
-                        setAmmount(item.payload.ammount);
-                        return null;
-                      })()}
-                    </div>
-                  </>
-                );
-              }} />
-          }
-        />
-        <Pie
-          data={chartData}
-          dataKey="percentage"
-          nameKey="category"
-          innerRadius={"55%"}
-          className="mb-4"
-        />
-        <ChartLegend
-          content={
-            <div className="flex flex-col items-start gap-2">
-              {chartData.map((item) => (
-                <div key={item.category} className="flex items-center gap-1">
-                  <div className={`size-3 [border-radius:calc(var(--radius)-1px);]`} style={{ background: item.fill }} />
-                  <div className="space-x-2">
-                    <span className="text-xs">
-                      {item.category.charAt(0).toUpperCase() + item.category.slice(1)}
-                    </span>
-                    <span className="text-muted-foreground">
-                      <span className="font-mono [font-size:10px] font-medium tabular-nums">
-                        {item.ammount.charAt(0)}
-                      </span>
-                      {item.ammount.slice(1)}
-                    </span>
-                  </div>
-                </div>
-              ))}
+    <div className="">
+      <ChartContainer config={chartConfig} className="mx-auto aspect-square">
+        <PieChartRecharts>
+          <ChartTooltip
+            cursor={false}
+            content={
+              <ChartTooltipContent
+                indicator="line"
+                hideLabel
+                showDate
+                date={ammount}
+                className="w-[180px]"
+                formatter={(value, name, item, index) => {
+                  return (
+                    <>
+                      <div
+                        className="h-4.5 w-1 shrink-0 rounded-[2px] bg-[--color-bg]"
+                        style={
+                          {
+                            "--color-bg": `var(--color-${name})`,
+                          } as React.CSSProperties
+                        }
+                      />
+                      {chartConfig[name as keyof typeof chartConfig]?.label ||
+                        name}
+                      <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
+                        {value}
+                        <span className="text-xs font-normal text-muted-foreground">
+                          %
+                        </span>
+                        {(() => {
+                          setAmmount(item.payload.ammount);
+                          return null;
+                        })()}
+                      </div>
+                    </>
+                  );
+                }}
+              />
+            }
+          />
+          <Pie
+            data={chartData}
+            dataKey="percentage"
+            nameKey="category"
+            innerRadius={"55%"}
+            className="mb-4"
+          />
+        </PieChartRecharts>
+      </ChartContainer>
+      <div className="flex flex-col gap-1 -mt-4 mx-auto">
+        {chartData.map((item) => (
+          <div key={item.category} className="flex items-center gap-1">
+            <div
+              className={`size-3 [border-radius:calc(var(--radius)-1px);]`}
+              style={{ background: item.fill }}
+            />
+            <div className="space-x-2">
+              <span className="text-xs">
+                {item.category.charAt(0).toUpperCase() + item.category.slice(1)}
+              </span>
+              <span className="text-muted-foreground text-xs">
+                <span className="font-mono [font-size:10px] font-medium tabular-nums">
+                  {item.ammount.charAt(0)}
+                </span>
+                {item.ammount.slice(1)}
+              </span>
             </div>
-          }
-        />
-      </PieChartRecharts>
-    </ChartContainer>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

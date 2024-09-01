@@ -79,7 +79,7 @@ export const SmallInfoChart = () => {
                     Radar Chart
                   </DropdownMenuRadioItem>
                   <DropdownMenuRadioItem
-                    className="cursor-pointer md:flex hidden"
+                    className="cursor-pointer"
                     value="Radial Chart"
                   >
                     <span>
