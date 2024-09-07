@@ -87,7 +87,7 @@ export const FilterButtons = () => {
             </span>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="md:w-auto p-0" align="start">
+        <PopoverContent className="md:w-auto p-1" align="start">
           <Calendar
             initialFocus
             mode="range"
@@ -96,6 +96,14 @@ export const FilterButtons = () => {
             onSelect={setDate}
             numberOfMonths={2}
           />
+          <div className="mt-2 p-2 flex gap-2 items-center">
+            <Button variant={"outline"} className="w-1/2">
+              Reset
+            </Button>
+            <Button className="w-1/2 bg-branding-primary hover:bg-branding-primary/80 text-white">
+              Apply
+            </Button>
+          </div>
         </PopoverContent>
       </Popover>
     </div>
