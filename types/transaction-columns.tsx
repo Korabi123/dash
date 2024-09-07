@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Badge } from "@/components/ui/badge";
 
 // TODO: Use prisma types
 //? This is just a example type for the individual payment
@@ -24,6 +25,7 @@ export type Payment = {
   ammount: number;
   account: string;
   category: string;
+  isIncome: boolean;
 }
 
 export const transactionColumns: ColumnDef<Payment>[] = [
@@ -109,6 +111,23 @@ export const transactionColumns: ColumnDef<Payment>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
+    },
+    cell: ({ row }) => {
+      const payment = row.original as Payment;
+
+      return (
+        <div className="flex items-center gap-2">
+          {payment.isIncome ? (
+            <Badge variant={"income"}>
+             {payment.ammount}$
+            </Badge>
+          ) : (
+            <Badge variant={"expenses"}>
+              {payment.ammount}$
+            </Badge>
+          )}
+        </div>
+      );
     },
   },
   {
