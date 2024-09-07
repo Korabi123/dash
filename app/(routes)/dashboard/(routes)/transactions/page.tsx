@@ -2,16 +2,38 @@ import { FilterButtons } from "@/components/dashboard/filter-buttons";
 import { DataTable } from "@/components/dashboard/tables/data-table";
 import { transactionColumns } from "@/types/transaction-columns";
 
+import { ArrowUpRightFromSquare, PlusIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 const DashboardOverviewPage = () => {
   return (
     <div className="ml-4 mb-12">
       <FilterButtons />
       <DataTable
+        title="Transactions History"
+        search
+        searchFor="payee"
         columns={transactionColumns}
+        actions={
+          <>
+            <Button className="bg-branding-primary gap-2 hover:bg-branding-primary/80 text-white">
+              <span>
+                <PlusIcon className="size-4" />
+              </span>
+              <span>Add new</span>
+            </Button>
+            <Button className="gap-2 bg-branding-primary hover:bg-branding-primary/80 text-white">
+              <span>
+                <ArrowUpRightFromSquare className="size-4" />
+              </span>
+              <span>Import</span>
+            </Button>
+          </>
+        }
         data={[
           {
             id: "1",
-            date: "2024-01-01",
+            date: "3 May, 2024",
             payee: "Payee 1",
             ammount: 100,
             account: "Account 1",
@@ -19,7 +41,7 @@ const DashboardOverviewPage = () => {
           },
           {
             id: "1",
-            date: "2024-04-09",
+            date: "9 April, 2024",
             payee: "Payee 2",
             ammount: 200,
             account: "Account 2",
@@ -27,7 +49,7 @@ const DashboardOverviewPage = () => {
           },
           {
             id: "1",
-            date: "2023-01-01",
+            date: "1 April, 2024",
             payee: "Payee 3",
             ammount: 300,
             account: "Account 3",
@@ -37,6 +59,6 @@ const DashboardOverviewPage = () => {
       />
     </div>
   );
-}
+};
 
 export default DashboardOverviewPage;
