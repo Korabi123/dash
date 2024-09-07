@@ -3,12 +3,15 @@
 import Image from "next/image"
 import BrandingLogo from "@/public/branding/svg-white.svg";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { usePathname, useRouter } from "next/navigation";
 
 export const DashboardHeader = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+
   return (
     <header className="w-full bg-transparent">
       <div className="flex container py-4 md:px-10 items-center justify-between">
@@ -21,11 +24,11 @@ export const DashboardHeader = () => {
             <span className="text-xl font-semibold text-white">Dash</span>
           </a>
           <nav className="hidden md:flex items-center gap-3">
-            <Button variant={"active"}>Overview</Button>
-            <Button variant={"nonActive"}>Transactions</Button>
-            <Button variant={"nonActive"}>Accounts</Button>
-            <Button variant={"nonActive"}>Categories</Button>
-            <Button variant={"nonActive"}>Settings</Button>
+            <Button variant={pathname === "/dashboard/overview" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/overview")}>Overview</Button>
+            <Button variant={pathname === "/dashboard/transactions" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/transactions")}>Transactions</Button>
+            <Button variant={pathname === "/dashboard/accounts" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/accounts")}>Accounts</Button>
+            <Button variant={pathname === "/dashboard/categories" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/categories")}>Categories</Button>
+            <Button variant={pathname === "/dashboard/settings" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/settings")}>Settings</Button>
           </nav>
         </div>
         <div className="hidden md:block">
