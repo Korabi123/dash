@@ -7,6 +7,7 @@ import { UserButton } from "@clerk/nextjs";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export const DashboardHeader = () => {
   const pathname = usePathname();
@@ -24,11 +25,46 @@ export const DashboardHeader = () => {
             <span className="text-xl font-semibold text-white">Dash</span>
           </a>
           <nav className="hidden md:flex items-center gap-3">
-            <Button variant={pathname === "/dashboard/overview" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/overview")}>Overview</Button>
-            <Button variant={pathname === "/dashboard/transactions" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/transactions")}>Transactions</Button>
-            <Button variant={pathname === "/dashboard/accounts" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/accounts")}>Accounts</Button>
-            <Button variant={pathname === "/dashboard/categories" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/categories")}>Categories</Button>
-            <Button variant={pathname === "/dashboard/settings" ? "active" : "nonActive"} onClick={() => router.push("/dashboard/settings")}>Settings</Button>
+            <Button
+              variant={
+                pathname === "/dashboard/overview" ? "active" : "nonActive"
+              }
+              onClick={() => router.push("/dashboard/overview")}
+            >
+              Overview
+            </Button>
+            <Button
+              variant={
+                pathname === "/dashboard/transactions" ? "active" : "nonActive"
+              }
+              onClick={() => router.push("/dashboard/transactions")}
+            >
+              Transactions
+            </Button>
+            <Button
+              variant={
+                pathname === "/dashboard/accounts" ? "active" : "nonActive"
+              }
+              onClick={() => router.push("/dashboard/accounts")}
+            >
+              Accounts
+            </Button>
+            <Button
+              variant={
+                pathname === "/dashboard/categories" ? "active" : "nonActive"
+              }
+              onClick={() => router.push("/dashboard/categories")}
+            >
+              Categories
+            </Button>
+            <Button
+              variant={
+                pathname === "/dashboard/settings" ? "active" : "nonActive"
+              }
+              onClick={() => router.push("/dashboard/settings")}
+            >
+              Settings
+            </Button>
           </nav>
         </div>
         <div className="hidden md:block">
@@ -44,12 +80,62 @@ export const DashboardHeader = () => {
             </SheetTrigger>
             <SheetContent>
               <div className="flex flex-col h-[100vh] mt-10 items-center w-full gap-8">
-                <nav className="flex flex-col mt-10 items-center w-full gap-3">
-                  <Button variant={"active"} className="w-full bg-branding-primary hover:bg-branding-primary/80">Overview</Button>
-                  <Button variant={"nonActive"} className="text-black hover:bg-muted hover:text-black w-full">Transactions</Button>
-                  <Button variant={"nonActive"} className="text-black hover:bg-muted hover:text-black w-full">Accounts</Button>
-                  <Button variant={"nonActive"} className="text-black hover:bg-muted hover:text-black w-full">Categories</Button>
-                  <Button variant={"nonActive"} className="text-black hover:bg-muted hover:text-black w-full">Settings</Button>
+                <nav className="w-full flex flex-col mt-10 items-center gap-3">
+                  <Button
+                    variant={
+                      pathname === "/dashboard/overview"
+                        ? "active"
+                        : "outline"
+                    }
+                    onClick={() => router.push("/dashboard/overview")}
+                    className={cn("text-black w-full", pathname === "/dashboard/overview" && "bg-branding-primary hover:bg-branding-primary/80 text-white")}
+                  >
+                    Overview
+                  </Button>
+                  <Button
+                    variant={
+                      pathname === "/dashboard/transactions"
+                        ? "active"
+                        : "outline"
+                    }
+                    onClick={() => router.push("/dashboard/transactions")}
+                    className={cn("text-black w-full", pathname === "/dashboard/transactions" && "bg-branding-primary hover:bg-branding-primary/80 text-white")}
+                  >
+                    Transactions
+                  </Button>
+                  <Button
+                    variant={
+                      pathname === "/dashboard/accounts"
+                        ? "active"
+                        : "outline"
+                    }
+                    onClick={() => router.push("/dashboard/accounts")}
+                    className={cn("text-black w-full", pathname === "/dashboard/accounts" && "bg-branding-primary hover:bg-branding-primary/80 text-white")}
+                  >
+                    Accounts
+                  </Button>
+                  <Button
+                    variant={
+                      pathname === "/dashboard/categories"
+                        ? "active"
+                        : "outline"
+                    }
+                    onClick={() => router.push("/dashboard/categories")}
+                    className={cn("text-black w-full", pathname === "/dashboard/categories" && "bg-branding-primary hover:bg-branding-primary/80 text-white")}
+                  >
+                    Categories
+                  </Button>
+                  <Button
+                    variant={
+                      pathname === "/dashboard/settings"
+                        ? "active"
+                        : "outline"
+                    }
+                    onClick={() => router.push("/dashboard/settings")}
+                    className={cn("text-black w-full", pathname === "/dashboard/settings" && "bg-branding-primary hover:bg-branding-primary/80 text-white")}
+                  >
+                    Settings
+                  </Button>
                 </nav>
               </div>
             </SheetContent>
