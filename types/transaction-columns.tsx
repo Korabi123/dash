@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox";
@@ -142,17 +142,23 @@ export const transactionColumns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
               Copy payment ID
+            </DropdownMenuItem> */}
+            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+              <Trash className="h-4 w-4" />
+              Delete
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+              <Edit className="h-4 w-4" />
+              Edit
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     }
   },
 ];
