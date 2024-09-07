@@ -69,9 +69,9 @@ export function DataTable<TData, TValue>({
 
   return (
     <Card className="mt-10">
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex md:flex-row flex-col items-center justify-between">
         <CardTitle className="text-2xl font-semibold">{title}</CardTitle>
-        <div className="space-x-2">{actions}</div>
+        <div className="space-x-2 md:pt-0 pt-4">{actions}</div>
       </CardHeader>
       <CardContent>
         {search && (
