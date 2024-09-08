@@ -6,12 +6,27 @@ import { Button } from "../ui/button";
 import { UserButton } from "@clerk/nextjs";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { addDays } from "date-fns";
 
 export const DashboardHeader = () => {
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
+
+  const currentYear = new Date().getFullYear();
+  const currentMonthIndex = new Date().getMonth();
+  const currentDayOfMonth = new Date().getDate();
+
+  const from = new Date(
+    currentYear,
+    currentMonthIndex - 1,
+    currentDayOfMonth
+  );
+  const to = addDays(
+    new Date(currentYear, currentMonthIndex, currentDayOfMonth),
+    0
+  );
 
   return (
     <header className="w-full bg-transparent">
@@ -29,7 +44,7 @@ export const DashboardHeader = () => {
               variant={
                 pathname === "/dashboard/overview" ? "active" : "nonActive"
               }
-              onClick={() => router.push("/dashboard/overview")}
+              onClick={() => router.push(`/dashboard/overview?date=${encodeURIComponent(`${from.toISOString()} - ${to.toISOString()}`)}`)}
             >
               Overview
             </Button>
@@ -37,7 +52,7 @@ export const DashboardHeader = () => {
               variant={
                 pathname === "/dashboard/transactions" ? "active" : "nonActive"
               }
-              onClick={() => router.push("/dashboard/transactions")}
+              onClick={() => router.push(`/dashboard/transactions?date=${encodeURIComponent(`${from.toISOString()} - ${to.toISOString()}`)}`)}
             >
               Transactions
             </Button>
@@ -45,7 +60,7 @@ export const DashboardHeader = () => {
               variant={
                 pathname === "/dashboard/accounts" ? "active" : "nonActive"
               }
-              onClick={() => router.push("/dashboard/accounts")}
+              onClick={() => router.push(`/dashboard/accounts?date=${encodeURIComponent(`${from.toISOString()} - ${to.toISOString()}`)}`)}
             >
               Accounts
             </Button>
@@ -53,7 +68,7 @@ export const DashboardHeader = () => {
               variant={
                 pathname === "/dashboard/categories" ? "active" : "nonActive"
               }
-              onClick={() => router.push("/dashboard/categories")}
+              onClick={() => router.push(`/dashboard/categories?date=${encodeURIComponent(`${from.toISOString()} - ${to.toISOString()}`)}`)}
             >
               Categories
             </Button>

@@ -16,7 +16,8 @@ interface InfoWidgetProps {
   year: number;
   value: number;
   icon: React.ReactNode;
-  isGood: boolean;
+  isGood?: boolean;
+  neutral?: boolean;
 }
 
 const InfoWidget = ({
@@ -27,22 +28,28 @@ const InfoWidget = ({
   value,
   icon,
   isGood,
+  neutral
 }: InfoWidgetProps) => {
   return (
     <Card className="md:w-1/3 w-full">
       <CardHeader>
         <div className="w-full flex items-center justify-between">
           <div>
-            <CardTitle className="text-3xl">{type.charAt(0).toUpperCase() + type.slice(1)}</CardTitle>
+            <CardTitle className="text-3xl">
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </CardTitle>
             <CardDescription className="text-xs mt-2">
               {dateRange}, {year}
             </CardDescription>
           </div>
-          <div className={cn("rounded-lg flex items-center justify-center size-12 p-2",
-            type === "remaining" && "bg-blue-400/25",
-            type === "income" && "bg-green-400/25",
-            type === "expenses" && "bg-red-400/25"
-          )}>
+          <div
+            className={cn(
+              "rounded-lg flex items-center justify-center size-12 p-2",
+              type === "remaining" && "bg-blue-400/25",
+              type === "income" && "bg-green-400/25",
+              type === "expenses" && "bg-red-400/25"
+            )}
+          >
             {icon}
           </div>
         </div>
@@ -54,9 +61,20 @@ const InfoWidget = ({
             {value}
           </span>
           <br />
-          <span className={cn("md:text-sm text-xs mt-2", isGood ? "text-green-500" : "text-red-500")}>
-            {footerInfo}
-          </span>
+          {neutral ? (
+            <span className="text-xs text-gray-500">
+              No transactions from last period
+            </span>
+          ) : (
+            <span
+              className={cn(
+                "md:text-sm text-xs mt-2",
+                isGood ? "text-green-500" : "text-red-500"
+              )}
+            >
+              {footerInfo}
+            </span>
+          )}
         </CardDescription>
       </CardContent>
     </Card>

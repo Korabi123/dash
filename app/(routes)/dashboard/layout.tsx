@@ -33,6 +33,25 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
     createUser();
   }
 
+  const dbAccounts = await prismadb.account.findMany({
+    where: {
+      userId: currentClerkUser.id,
+    }
+  });
+
+  if (!dbAccounts.length) {
+    const createAccount = async () => {
+      await prismadb.account.create({
+        data: {
+          userId: currentClerkUser.id,
+          name: "Savings",
+        }
+      });
+    }
+
+    createAccount();
+  }
+
   return (
     <div className="flex flex-col relative min-h-screen overflow-x-clip">
       <DashboardHeader />

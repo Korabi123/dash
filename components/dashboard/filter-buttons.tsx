@@ -25,24 +25,65 @@ import {
 } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Account } from "@prisma/client";
 
 
-export const FilterButtons = () => {
-  const [position, setPosition] = React.useState("All Accounts");
+interface FilterButtonsProps {
+  accounts: Account[];
+}
+
+
+export const FilterButtons = ({
+  accounts,
+}: FilterButtonsProps) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [selectedAccount, setSelectedAccount] = React.useState("All Accounts");
   const currentYear = new Date().getFullYear();
   const currentMonthIndex = new Date().getMonth();
   const currentDayOfMonth = new Date().getDate();
+
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(currentYear, currentMonthIndex -1, currentDayOfMonth),
     to: addDays(new Date(currentYear, currentMonthIndex, currentDayOfMonth), 0),
-  })
+  });
+
+  const createQueryString = React.useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+
+      return params.toString()
+    },
+    [searchParams]
+  )
+
+  React.useEffect(() => {
+    if (date) {
+      // @ts-ignore
+      router.push(`${pathname}?${createQueryString("date", `${date.from.toISOString()} - ${date.to.toISOString()}`)}`)
+    }
+  }, [date, pathname, createQueryString, router]);
+
+  const onResetDate = () => {
+    const from = new Date(currentYear, currentMonthIndex -1, currentDayOfMonth);
+    const to = addDays(new Date(currentYear, currentMonthIndex, currentDayOfMonth), 0);
+
+    setDate({
+      from,
+      to,
+    });
+  };
 
   return (
     <div className="mt-4 flex md:flex-row flex-col gap-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button className="max-w-fit md:h-9 md:px-4 md:text-sm h-8 rounded-md px-3 text-xs" variant="active">
-            {position}{" "}
+            {selectedAccount}{" "}
             <span>
               <ChevronDownIcon className="inline-block size-4 ml-2 mb-[1px]" />
             </span>
@@ -51,10 +92,11 @@ export const FilterButtons = () => {
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Filter Data By Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+          <DropdownMenuRadioGroup value={selectedAccount} onValueChange={setSelectedAccount}>
             <DropdownMenuRadioItem className="cursor-pointer" value="All Accounts">All Accounts</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem className="cursor-pointer" value="Morgage">Morgage</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem className="cursor-pointer" value="Savings">Savings</DropdownMenuRadioItem>
+            {accounts.map((account) => (
+              <DropdownMenuRadioItem key={account.id} className="cursor-pointer" value={`${account.name}`}>{account.name}</DropdownMenuRadioItem>
+            ))}
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -97,11 +139,8 @@ export const FilterButtons = () => {
             numberOfMonths={2}
           />
           <div className="mt-2 p-2 flex gap-2 items-center">
-            <Button variant={"outline"} className="w-1/2">
+            <Button onClick={onResetDate} variant={"outline"} className="w-full">
               Reset
-            </Button>
-            <Button className="w-1/2 bg-branding-primary hover:bg-branding-primary/80 text-white">
-              Apply
             </Button>
           </div>
         </PopoverContent>

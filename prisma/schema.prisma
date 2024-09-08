@@ -31,6 +31,7 @@ model Transaction {
 
 model Category {
   id        String      @id @default(cuid())
+  userId    String
   name      String
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
@@ -39,6 +40,7 @@ model Category {
 
 model Account {
   id        String      @id @default(cuid())
+  userId    String
   name      String
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
