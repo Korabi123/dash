@@ -2,7 +2,37 @@ import { GreetingSection } from "@/components/dashboard/greeting";
 import { HalfBackground } from "@/components/dashboard/half-background";
 import { DashboardHeader } from "@/components/dashboard/header";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+import prismadb from "@/lib/prismadb";
+import { currentUser } from "@clerk/nextjs/server";
+
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+  const currentClerkUser = await currentUser();
+
+  if (!currentClerkUser) {
+    return null;
+  }
+
+  const dbProfile = await prismadb.profile.findFirst({
+    where: {
+      userId: currentClerkUser.id,
+    }
+  });
+
+  if (!dbProfile) {
+    const createUser = async () => {
+      await prismadb.profile.create({
+        data: {
+          userId: currentClerkUser.id,
+          name: currentClerkUser.firstName,
+          email: currentClerkUser.emailAddresses[0].emailAddress,
+          image: currentClerkUser.imageUrl,
+        }
+      });
+    }
+
+    createUser();
+  }
+
   return (
     <div className="flex flex-col relative min-h-screen overflow-x-clip">
       <DashboardHeader />
