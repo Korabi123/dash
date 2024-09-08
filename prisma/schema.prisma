@@ -12,3 +12,46 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Transaction {
+  id        String      @id @default(cuid())
+  userId    String
+  amount    Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  payee     String
+
+  category  Category?   @relation(fields: [categoryId], references: [id])
+  categoryId String?
+  account   Account?    @relation(fields: [accountId], references: [id])
+  accountId String?
+  profile   Profile?    @relation(fields: [profileId], references: [id])
+  profileId String?
+}
+
+model Category {
+  id        String      @id @default(cuid())
+  name      String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  transactions Transaction[]
+}
+
+model Account {
+  id        String      @id @default(cuid())
+  name      String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  transactions Transaction[]
+}
+
+model Profile {
+  id        String      @id @default(cuid())
+  userId    String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  name      String?
+  email     String?     @unique
+  image     String?
+  transactions Transaction[]
+}
