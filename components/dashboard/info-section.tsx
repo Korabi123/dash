@@ -6,12 +6,9 @@ import { BigInfoChart } from "./big-info-chart";
 import { SmallInfoChart } from "./small-info-chart";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { addDays, format } from "date-fns";
-import axios from "axios";
 
 import * as React from "react";
-import { currentUser } from "@clerk/nextjs/server";
 import { Transaction } from "@prisma/client";
-import { useUser } from "@clerk/nextjs";
 
 interface InfoSectionProps {
   transactions: Transaction[];
@@ -134,7 +131,7 @@ export const InfoSection = ({
           />
         </div>
         <div className="flex w-full md:flex-row flex-col gap-4">
-          <BigInfoChart />
+          <BigInfoChart transactions={transactions} />
           <SmallInfoChart />
         </div>
       </div>
@@ -245,7 +242,7 @@ export const InfoSection = ({
         />
       </div>
       <div className="flex w-full md:flex-row flex-col gap-4">
-        <BigInfoChart />
+        <BigInfoChart transactions={transactions} />
         <SmallInfoChart />
       </div>
     </div>

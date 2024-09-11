@@ -23,8 +23,13 @@ import { BarChart } from "./charts/bar-chart";
 import { Button } from "../ui/button";
 import { AreaChartIcon, BarChartIcon, ChartColumnBig, ChevronDown, LineChartIcon } from "lucide-react";
 import { LineChart } from "./charts/line-chart";
+import { Transaction } from "@prisma/client";
 
-export const BigInfoChart = () => {
+interface BigInfoChartProps {
+  transactions: Transaction[];
+}
+
+export const BigInfoChart = ({ transactions }: BigInfoChartProps) => {
   const [chartType, setChartType] = React.useState("Area Chart");
 
   return (
@@ -94,9 +99,9 @@ export const BigInfoChart = () => {
         </div>
       </CardHeader>
       <CardContent className="mt-4">
-        {chartType === "Area Chart" && <AreaChart />}
-        {chartType === "Bar Chart" && <BarChart />}
-        {chartType === "Line Chart" && <LineChart />}
+        {chartType === "Area Chart" && <AreaChart transactions={transactions} />}
+        {chartType === "Bar Chart" && <BarChart transactions={transactions} />}
+        {chartType === "Line Chart" && <LineChart transactions={transactions} />}
       </CardContent>
     </Card>
   );
