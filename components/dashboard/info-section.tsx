@@ -132,7 +132,7 @@ export const InfoSection = ({
         </div>
         <div className="flex w-full md:flex-row flex-col gap-4">
           <BigInfoChart transactions={transactions} />
-          <SmallInfoChart />
+          <SmallInfoChart transactions={transactions} />
         </div>
       </div>
     );
@@ -243,7 +243,7 @@ export const InfoSection = ({
       </div>
       <div className="flex w-full md:flex-row flex-col gap-4">
         <BigInfoChart transactions={transactions} />
-        <SmallInfoChart />
+        <SmallInfoChart transactions={transactions} />
       </div>
     </div>
   );

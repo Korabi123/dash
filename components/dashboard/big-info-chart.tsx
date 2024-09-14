@@ -33,7 +33,7 @@ export const BigInfoChart = ({ transactions }: BigInfoChartProps) => {
   const [chartType, setChartType] = React.useState("Area Chart");
 
   return (
-    <Card className="md:w-2/3 w-full">
+    <Card className="md:w-2/3 w-full md:min-h-[550px] min-h-[300px]">
       <CardHeader>
         <div className="w-full flex md:flex-row flex-col items-center justify-between">
           <CardTitle className="text-2xl">Transactions</CardTitle>
@@ -98,10 +98,43 @@ export const BigInfoChart = ({ transactions }: BigInfoChartProps) => {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="mt-4">
-        {chartType === "Area Chart" && <AreaChart transactions={transactions} />}
-        {chartType === "Bar Chart" && <BarChart transactions={transactions} />}
-        {chartType === "Line Chart" && <LineChart transactions={transactions} />}
+      <CardContent className="mt-4 h-full w-full">
+        {chartType === "Area Chart" && (
+          <>
+            {transactions.length === 0 ? (
+              <div className="flex flex-col sm:pb-[13%] pb-0 h-full w-full items-center justify-center gap-2">
+                <div className="text-xl">No Transactions</div>
+                <div className="text-sm">You have no transactions to display</div>
+              </div>
+            ) : (
+              <AreaChart transactions={transactions} />
+            )}
+          </>
+        )}
+        {chartType === "Bar Chart" && (
+          <>
+            {transactions.length === 0 ? (
+              <div className="flex flex-col sm:pb-[13%] pb-0 h-full w-full items-center justify-center gap-2">
+                <div className="text-xl">No Transactions</div>
+                <div className="text-sm">You have no transactions to display</div>
+              </div>
+            ) : (
+              <BarChart transactions={transactions} />
+            )}
+          </>
+        )}
+        {chartType === "Line Chart" && (
+          <>
+            {transactions.length === 0 ? (
+              <div className="flex flex-col sm:pb-[13%] pb-0 h-full w-full items-center justify-center gap-2">
+                <div className="text-xl">No Transactions</div>
+                <div className="text-sm">You have no transactions to display</div>
+              </div>
+            ) : (
+              <LineChart transactions={transactions} />
+            )}
+          </>
+        )}
       </CardContent>
     </Card>
   );

@@ -127,192 +127,83 @@ export function LineChart({ transactions }: LineChartProps) {
     tempArrOfObjsFunc();
   }, [transactions]);
 
-  if (transactions.length === 0) {
-    return (
-      <ChartContainer config={chartConfig}>
-        <LineChartRecharts
-          accessibilityLayer
-          data={[
-            {
-              date: "NaN",
-              income: 0,
-              expenses: 0,
-            },
-
-            {
-              date: "NaN",
-              income: 0,
-              expenses: 0,
-            },
-            {
-              date: "NaN",
-              income: 0,
-              expenses: 0,
-            },
-            {
-              date: "NaN",
-              income: 0,
-              expenses: 0,
-            },
-            {
-              date: "NaN",
-              income: 0,
-              expenses: 0,
-            },
-          ]}
-          margin={{
-            left: 12,
-            right: 12,
-          }}
-        >
-          <CartesianGrid vertical={true} />
-          <XAxis
-            dataKey="date"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={10}
-            // tickFormatter={(value) => {
-            //   return new Date(value).toLocaleDateString("en-US", {
-            //     month: "short",
-            //     day: "numeric",
-            //   });
-            // }}
-            tickFormatter={(value) => value.slice(0, 3)}
-          />
-          <ChartTooltip
-            cursor={false}
-            content={
-              <ChartTooltipContent
-                indicator="line"
-                hideLabel
-                showDate
-                date={date}
-                className="w-[180px]"
-                formatter={(value, name, item, index) => {
-                  return (
-                    <>
-                      <div
-                        className="h-4.5 w-1 shrink-0 rounded-[2px] bg-[--color-bg]"
-                        style={
-                          {
-                            "--color-bg": `var(--color-${name})`,
-                          } as React.CSSProperties
-                        }
-                      />
-                      {chartConfig[name as keyof typeof chartConfig]?.label ||
-                        name}
-                      <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
-                        <span className="text-xs font-normal text-muted-foreground">
-                          $
-                        </span>
-                        {value}
-                        {(() => {
-                          setDate(item.payload.date);
-                          return null;
-                        })()}
-                      </div>
-                    </>
-                  );
-                }}
-              />
-            }
-          />
-          <Line
-            dataKey="income"
-            type="linear"
-            stroke="var(--color-income)"
-            strokeWidth={2}
-            dot={false}
-          />
-          <Line
-            dataKey="expenses"
-            type="linear"
-            stroke="var(--color-expenses)"
-            strokeWidth={2}
-            dot={false}
-          />
-        </LineChartRecharts>
-      </ChartContainer>
-    );
-  } else {
-    return (
-      <ChartContainer config={chartConfig}>
-        <LineChartRecharts
-          accessibilityLayer
-          data={chartData}
-          margin={{
-            left: 12,
-            right: 12,
-          }}
-        >
-          <CartesianGrid vertical={true} />
-          <XAxis
-            dataKey="date"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={10}
-            // tickFormatter={(value) => {
-            //   return new Date(value).toLocaleDateString("en-US", {
-            //     month: "short",
-            //     day: "numeric",
-            //   });
-            // }}
-            tickFormatter={(value) => value.slice(0, 3)}
-          />
-          <ChartTooltip
-            cursor={false}
-            content={
-              <ChartTooltipContent
-                indicator="line"
-                hideLabel
-                showDate
-                date={date}
-                className="w-[180px]"
-                formatter={(value, name, item, index) => {
-                  return (
-                    <>
-                      <div
-                        className="h-4.5 w-1 shrink-0 rounded-[2px] bg-[--color-bg]"
-                        style={
-                          {
-                            "--color-bg": `var(--color-${name})`,
-                          } as React.CSSProperties
-                        }
-                      />
-                      {chartConfig[name as keyof typeof chartConfig]?.label ||
-                        name}
-                      <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
-                        <span className="text-xs font-normal text-muted-foreground">
-                          $
-                        </span>
-                        {value}
-                        {(() => {
-                          setDate(item.payload.date);
-                          return null;
-                        })()}
-                      </div>
-                    </>
-                  );
-                }}
-              />
-            }
-          />
-          <Line
-            dataKey="income"
-            type="linear"
-            stroke="var(--color-income)"
-            strokeWidth={2}
-            dot={false}
-          />
-          <Line
-            dataKey="expenses"
-            type="linear"
-            stroke="var(--color-expenses)"
-            strokeWidth={2}
-            dot={false}
-          />
-        </LineChartRecharts>
-      </ChartContainer>
-    );
-  }
+  return (
+    <ChartContainer config={chartConfig}>
+      <LineChartRecharts
+        accessibilityLayer
+        data={chartData}
+        margin={{
+          left: 12,
+          right: 12,
+        }}
+      >
+        <CartesianGrid vertical={true} />
+        <XAxis
+          dataKey="date"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={10}
+          // tickFormatter={(value) => {
+          //   return new Date(value).toLocaleDateString("en-US", {
+          //     month: "short",
+          //     day: "numeric",
+          //   });
+          // }}
+          tickFormatter={(value) => value.slice(0, 3)}
+        />
+        <ChartTooltip
+          cursor={false}
+          content={
+            <ChartTooltipContent
+              indicator="line"
+              hideLabel
+              showDate
+              date={date}
+              className="w-[180px]"
+              formatter={(value, name, item, index) => {
+                return (
+                  <>
+                    <div
+                      className="h-4.5 w-1 shrink-0 rounded-[2px] bg-[--color-bg]"
+                      style={
+                        {
+                          "--color-bg": `var(--color-${name})`,
+                        } as React.CSSProperties
+                      }
+                    />
+                    {chartConfig[name as keyof typeof chartConfig]?.label ||
+                      name}
+                    <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
+                      <span className="text-xs font-normal text-muted-foreground">
+                        $
+                      </span>
+                      {value}
+                      {(() => {
+                        setDate(item.payload.date);
+                        return null;
+                      })()}
+                    </div>
+                  </>
+                );
+              }}
+            />
+          }
+        />
+        <Line
+          dataKey="income"
+          type="linear"
+          stroke="var(--color-income)"
+          strokeWidth={2}
+          dot={false}
+        />
+        <Line
+          dataKey="expenses"
+          type="linear"
+          stroke="var(--color-expenses)"
+          strokeWidth={2}
+          dot={false}
+        />
+      </LineChartRecharts>
+    </ChartContainer>
+  );
 }
