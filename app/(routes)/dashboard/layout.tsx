@@ -44,7 +44,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
       await prismadb.account.create({
         data: {
           userId: currentClerkUser.id,
-          name: "Savings",
+          name: "Checking",
         }
       });
     }

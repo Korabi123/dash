@@ -4,17 +4,51 @@ import { transactionColumns } from "@/types/transaction-columns";
 import { DataTable } from "../data-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightFromSquare, PlusIcon } from "lucide-react";
+import { TransactionsWithCategory } from "@/types/transactions-with-category-and-account";
+import { useModalStore } from "@/hooks/useModalStore";
+import { useEffect, useState } from "react";
 
-export const TransactionsTable = () => {
+interface TransactionsTableProps {
+  transactions: TransactionsWithCategory[];
+}
+
+export const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+  const { onOpen } = useModalStore();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
+  const formattedTransactions = transactions.map((transaction) => {
+    return {
+      id: transaction.id,
+      date: transaction.createdAt.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+      payee: transaction.payee,
+      amount: transaction.amount,
+      account: transaction?.account?.name,
+      category: transaction.category?.name,
+      isIncome: transaction.amount > 0,
+    };
+  });
+
   return (
     <DataTable
       title="Transactions History"
       search
       searchFor="payee"
-      columns={transactionColumns}
+      columns={transactionColumns as any}
       actions={
         <>
-          <Button className="bg-branding-primary gap-2 hover:bg-branding-primary/80 text-white">
+          <Button onClick={() => onOpen("createTransaction")} className="bg-branding-primary gap-2 hover:bg-branding-primary/80 text-white">
             <span>
               <PlusIcon className="size-4" />
             </span>
@@ -28,35 +62,7 @@ export const TransactionsTable = () => {
           </Button>
         </>
       }
-      data={[
-        {
-          id: "1",
-          date: "3 June, 2024",
-          payee: "Merchant",
-          ammount: 427.63,
-          account: "Checking",
-          category: "Rent",
-          isIncome: true,
-        },
-        {
-          id: "1",
-          date: "9 April, 2024",
-          payee: "Merchant",
-          ammount: -1274.36,
-          account: "Checking",
-          category: "Travel",
-          isIncome: false,
-        },
-        {
-          id: "1",
-          date: "1 April, 2024",
-          payee: "Merchant",
-          ammount: -254.79,
-          account: "Checking",
-          category: "Food",
-          isIncome: false,
-        },
-      ]}
+      data={formattedTransactions}
     />
   );
 };

@@ -1,34 +1,27 @@
 "use client";
 
+import { useModalStore } from "@/hooks/useModalStore";
+
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Badge } from "@/components/ui/badge";
 
-// TODO: Use prisma types
-//? This is just a example type for the individual payment
-//? Later will be replaced with prisma types
-export type Payment = {
+import { Badge } from "@/components/ui/badge";
+import { ColumnActions } from "@/components/column-actions/column-actions";
+
+export type Transaction = {
   id: string;
   date: string;
   payee: string;
-  ammount: number;
+  amount: number;
   account: string;
   category: string;
   isIncome: boolean;
 }
 
-export const transactionColumns: ColumnDef<Payment>[] = [
+export const transactionColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "select",
     header: ({ table }) => (
@@ -99,7 +92,7 @@ export const transactionColumns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "ammount",
+    accessorKey: "amount",
     header: ({ column }) => {
       return (
         <Button
@@ -107,23 +100,23 @@ export const transactionColumns: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="p-0"
         >
-          Ammount
+          Amount
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
     cell: ({ row }) => {
-      const payment = row.original as Payment;
+      const transaction = row.original as Transaction;
 
       return (
         <div className="flex items-center gap-2">
-          {payment.isIncome ? (
+          {transaction.isIncome ? (
             <Badge variant={"income"}>
-             {payment.ammount}$
+             {transaction.amount}$
             </Badge>
           ) : (
             <Badge variant={"expenses"}>
-              {payment.ammount}$
+              {transaction.amount}$
             </Badge>
           )}
         </div>
@@ -149,34 +142,10 @@ export const transactionColumns: ColumnDef<Payment>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original as Payment;
+      const transaction = row.original as Transaction;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem> */}
-            {/* <DropdownMenuSeparator /> */}
-            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-              <Trash className="h-4 w-4" />
-              Delete
-            </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-              <Edit className="h-4 w-4" />
-              Edit
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <ColumnActions transactionId={transaction.id} />
       );
     }
   },

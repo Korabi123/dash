@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 
-export type ModalStoreType = "initializeInfo"
+export type ModalStoreType = "createTransaction" | "editTransaction" | "deleteTransaction"
 
 interface ModalStoreData {
   apiUrl?: string;
   query?: Record<string, any>;
+  transactionId?: string;
 }
 
 interface ModalStore {
@@ -13,7 +14,16 @@ interface ModalStore {
   isOpen: boolean;
   onOpen: (type: ModalStoreType, data?: ModalStoreData) => void;
   onClose: () => void;
+  reset: () => void;
 }
+
+const initialState = {
+  date: undefined,
+  categoryName: "",
+  accountName: "",
+  payee: "",
+  amount: 0,
+};
 
 export const useModalStore = create<ModalStore>()((set) => ({
   type: null,
@@ -24,5 +34,9 @@ export const useModalStore = create<ModalStore>()((set) => ({
   },
   onClose: () => {
     set({ type: null, data: {}, isOpen: false });
+  },
+  reset: () => {
+    // @ts-ignore
+    set(initialState)
   },
 }));

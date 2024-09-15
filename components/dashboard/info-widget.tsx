@@ -7,6 +7,7 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
+  CardFooter,
 } from "../ui/card";
 
 interface InfoWidgetProps {
@@ -55,12 +56,16 @@ const InfoWidget = ({
         </div>
       </CardHeader>
       <CardContent className="mt-4">
-        <CardDescription className="text-black">
-          <span className="text-lg font-semibold tracking-tighter">$</span>
-          <span className="[font-size:1.600rem] [line-height: 2.25rem] font-semibold tracking-tighter">
-            {value}
+        <CardDescription className="text-black flex flex-col">
+          <span className="mb-2">
+            <span className="[font-size:1.600rem] [line-height: 2.25rem] font-semibold tracking-tighter">
+              {value}
+            </span>
+            <span className="text-lg font-semibold tracking-tighter">$</span>
           </span>
-          <br />
+          {value < 0 && (
+            <span className="text-red-500 text-xs">Warning: You are in debt</span>
+          )}
           {neutral ? (
             <span className="text-xs text-gray-500">
               No transactions from last period

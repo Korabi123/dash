@@ -31,11 +31,14 @@ const DashboardOverviewPage = async ({
       ? new Date(paramsDateRange.split(" - ")[1])
       : undefined;
 
+    // @ts-ignore
+    const secondMonthFromRangePlusTwoDays = new Date(secondMonthFromRange.getTime() + (2 * 24 * 60 * 60 * 1000));
+
   const transactions = await prismadb.transaction.findMany({
     where: {
       userId: currentClerkUser.id,
       createdAt: {
-        lte: secondMonthFromRange,
+        lt: secondMonthFromRangePlusTwoDays,
         gte: firstMonthFromRange,
       }
     },

@@ -165,16 +165,7 @@ export function AreaChart({ transactions }: AreaChartProps) {
     <ChartContainer config={chartConfig}>
       <AreaChartRecharts
         accessibilityLayer
-        data={[
-          { date: "NaN", income: 0, expenses: 0 },
-          { date: "NaN", income: 0, expenses: 0 },
-          { date: "NaN", income: 0, expenses: 0 },
-          { date: "NaN", income: 0, expenses: 0 },
-          { date: "NaN", income: 0, expenses: 0 },
-          { date: "NaN", income: 0, expenses: 0 },
-          { date: "NaN", income: 0, expenses: 0 },
-          { date: "NaN", income: 0, expenses: 0 },
-        ]}
+        data={chartData}
         margin={{
           left: 12,
           right: 12,

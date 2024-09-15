@@ -89,7 +89,7 @@ export const FilterButtons = ({
             </span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
+        <DropdownMenuContent className="max-w-fit">
           <DropdownMenuLabel>Filter Data By Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup value={selectedAccount} onValueChange={setSelectedAccount}>

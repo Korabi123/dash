@@ -19,6 +19,7 @@ export async function GET (req: Request) {
     const categoryWithTransactions = await prismadb.category.findUnique({
       where: {
         id: categoryId,
+        userId,
       },
       include: {
         transactions: true,
@@ -32,7 +33,7 @@ export async function GET (req: Request) {
     return NextResponse.json(categoryWithTransactions, { status: 200, statusText: "OK" });
   } catch (error) {
     // @ts-ignore
-    console.log(`Error Getting All Transactions: ${error.message}`);
+    console.log(`Error Getting Unique Category: ${error.message}`);
     return new NextResponse(`Internal Server Error`, { status: 500 });
   }
 }

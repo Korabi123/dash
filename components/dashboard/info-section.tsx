@@ -61,15 +61,33 @@ export const InfoSection = ({
     )}`;
   }
 
-  const totalCurrentIncome = transactions.reduce((acc, transaction) => {
-    return acc + transaction.amount;
-  }, 0);
+  let totalCurrentIncome = 0;
+  let totalCurrentExpenses = 0;
 
-  const totalCurrentExpenses = transactions.reduce((acc, transaction) => {
-    return acc - transaction.amount;
-  }, 0);
+  const calculateCurrentIncome = (transactions: Transaction[]) => {
+    transactions.forEach((transaction) => {
+      const isIncome = transaction.amount > 0;
 
-  const totalCurrentBalance = totalCurrentIncome - totalCurrentExpenses;
+      if (isIncome) {
+        totalCurrentIncome += transaction.amount;
+      }
+    });
+  }
+
+  const calculateCurrentExpenses = (transactions: Transaction[]) => {
+    transactions.forEach((transaction) => {
+      const isExpense = transaction.amount < 0;
+
+      if (isExpense) {
+        totalCurrentExpenses += transaction.amount;
+      }
+    });
+  };
+
+  calculateCurrentIncome(transactions);
+  calculateCurrentExpenses(transactions);
+
+  const totalCurrentBalance = totalCurrentIncome - (totalCurrentExpenses * -1);
 
   // Comment out for testing
   if (previousPeriodTransactions?.length === 0 || !previousPeriodTransactions) {
@@ -125,15 +143,16 @@ export const InfoSection = ({
             )}`}
             // @ts-ignore
             year={format(toDate, "yyyy")}
-            value={totalCurrentExpenses}
+            value={totalCurrentExpenses * -1}
             icon={<TrendingDownIcon className="stroke-red-500" />}
             neutral
           />
         </div>
-        <div className="flex w-full md:flex-row flex-col gap-4">
+        {/* Charts Are Disabled for now */}
+        {/* <div className="flex w-full md:flex-row flex-col gap-4">
           <BigInfoChart transactions={transactions} />
           <SmallInfoChart transactions={transactions} />
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -155,25 +174,39 @@ export const InfoSection = ({
   // const previousBalancePercentage = (totalTestBalance / totalPreviousBalance) / totalTestBalance * 100;
 
   // ! Calculate totals
-  const totalPreviousIncome = previousPeriodTransactions.reduce(
-    (acc, transaction) => {
-      return acc + transaction.amount;
-    },
-    0
-  );
-  const totalPreviousExpenses = previousPeriodTransactions.reduce(
-    (acc, transition) => {
-      return acc - transition.amount;
-    },
-    0
-  );
-  const totalPreviousBalance = totalPreviousIncome - totalPreviousExpenses;
+  let totalPreviousIncome = 0;
+  let totalPreviousExpenses = 0;
+
+  const calculatePreviousIncome = (transactions: Transaction[]) => {
+    transactions.forEach((transaction) => {
+      const isIncome = transaction.amount > 0;
+
+      if (isIncome) {
+        totalPreviousIncome += transaction.amount;
+      }
+    });
+  }
+
+  const calculatePreviousExpenses = (transactions: Transaction[]) => {
+    transactions.forEach((transaction) => {
+      const isExpense = transaction.amount < 0;
+
+      if (isExpense) {
+        totalPreviousExpenses += transaction.amount;
+      }
+    });
+  };
+
+  calculatePreviousIncome(previousPeriodTransactions);
+  calculatePreviousExpenses(previousPeriodTransactions);
+
+  const totalPreviousBalance = totalPreviousIncome - (totalPreviousExpenses * -1);
 
   // ! Calculate percentages
   const perviousIncomePercentage =
     ((totalCurrentIncome - totalPreviousIncome) / totalCurrentIncome) * 100;
   const previousExpensePercentage =
-    ((totalCurrentExpenses - totalPreviousExpenses) / totalCurrentExpenses) *
+    (((totalCurrentExpenses * -1) - (totalPreviousExpenses * -1)) / (totalCurrentExpenses * -1)) * 100;
     100;
   const previousBalancePercentage =
     (totalCurrentBalance / totalPreviousBalance / totalCurrentBalance) * 100;
@@ -236,7 +269,7 @@ export const InfoSection = ({
           )}`}
           // @ts-ignore
           year={format(toDate, "yyyy")}
-          value={totalCurrentExpenses}
+          value={totalCurrentExpenses * -1}
           icon={<TrendingDownIcon className="stroke-red-500" />}
           isGood={previousExpensePercentage > 0 ? false : true}
         />

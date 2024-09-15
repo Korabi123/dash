@@ -3,6 +3,8 @@ import { Calistoga, Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ZustandProvider } from "@/components/providers/zustand-provider";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-poppins" });
@@ -57,7 +59,9 @@ export default function RootLayout({
             "font-inter antialiased"
           )}
         >
+          <ZustandProvider />
           {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
