@@ -21,6 +21,9 @@ export async function GET (req: Request) {
         id: accountId,
         userId,
       },
+      include: {
+        transactions: true,
+      }
     });
 
     if (!account) {

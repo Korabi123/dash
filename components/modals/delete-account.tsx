@@ -12,14 +12,34 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { AccountWithTransactions } from "@/types/account-with-transactions";
 
 export const DeleteAccountModal = () => {
+  const [apiData, setApiData] = useState<AccountWithTransactions>();
+
   const router = useRouter();
   const { onClose, isOpen, type, data } = useModalStore();
   const isDialogOpen = isOpen && type === "deleteAccount";
 
+  useEffect(() => {
+    if (isDialogOpen) {
+      const getData = async () => {
+        const res = await axios.get(`/api/accounts/getUnique?accountId=${data.accountId}`);
+        setApiData(res.data);
+      }
+      getData();
+    }
+  }, [data, isDialogOpen]);
+
   const onDeleteAccount = async () => {
     try {
+      if (apiData?.transactions?.length) {
+        toast.error("Please unlink all transactions before deleting the account");
+        onClose();
+        return;
+      }
+
       await axios.delete(`/api/accounts/delete?accountId=${data.accountId}`);
       toast.success("Account deleted successfully");
       onClose();
