@@ -1,7 +1,11 @@
+import BgImage from "@/public/assets/gradient-bg-4x.png";
+import Image from "next/image";
+
 const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="text-white">
-      <img src={"https://github.com/Korabi123/dash/blob/master/public/assets/gradient-bg.png"} alt="Background Image" className="-z-[100] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-fill mt-20" />
+      <div className="absolute top-0 left-0 w-full h-full opacity-50 z-[-200]" />
+      <img src={BgImage.src} alt="Background Image" className="md:block hidden absolute object-cover w-full -z-[100] mt-10" />
       {children}
     </main>
   );
