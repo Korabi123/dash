@@ -208,15 +208,15 @@ export const InfoSection = ({
   const previousExpensePercentage =
     (((totalCurrentExpenses * -1) - (totalPreviousExpenses * -1)) / (totalCurrentExpenses * -1)) * 100;
     100;
-  const previousBalancePercentage =
-    (totalCurrentBalance / totalPreviousBalance / totalCurrentBalance) * 100;
+  let previousBalancePercentage =
+    ((totalCurrentBalance - totalPreviousBalance) / totalCurrentBalance) * 100;
 
   return (
     <div className="flex flex-col gap-16 md:gap-10 md:mt-[10vh] mt-10">
       <div id="row-1" className="flex w-full md:flex-row flex-col gap-4">
         <InfoWidget
           type="remaining"
-          footerInfo={`${previousBalancePercentage.toFixed(
+          footerInfo={`${previousBalancePercentage > 0 ? "+" : ""}${previousBalancePercentage.toFixed(
             2
           )}% from last period`}
           // @ts-ignore
@@ -251,14 +251,14 @@ export const InfoSection = ({
           // @ts-ignore
           year={format(toDate, "yyyy")}
           value={totalCurrentIncome}
-          footerInfo={`${perviousIncomePercentage.toFixed(
+          footerInfo={`${perviousIncomePercentage > 0 ? "+" : ""}${perviousIncomePercentage.toFixed(
             2
           )}% from last period`}
           isGood={perviousIncomePercentage > 0 ? true : false}
         />
         <InfoWidget
           type="expenses"
-          footerInfo={`${previousExpensePercentage.toFixed(
+          footerInfo={`${previousExpensePercentage > 0 ? "+" : ""}${previousExpensePercentage.toFixed(
             2
           )}% from last period`}
           // @ts-ignore
@@ -274,10 +274,11 @@ export const InfoSection = ({
           isGood={previousExpensePercentage > 0 ? false : true}
         />
       </div>
-      <div className="flex w-full md:flex-row flex-col gap-4">
+      {/* Charts are disabled for now */}
+      {/* <div className="flex w-full md:flex-row flex-col gap-4">
         <BigInfoChart transactions={transactions} />
         <SmallInfoChart transactions={transactions} />
-      </div>
+      </div> */}
     </div>
   );
 };
