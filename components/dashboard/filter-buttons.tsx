@@ -28,12 +28,11 @@ import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Account } from "@prisma/client";
 import { toast } from "sonner";
-
+import { create } from "domain";
 
 interface FilterButtonsProps {
   accounts: Account[];
 }
-
 
 export const FilterButtons = ({
   accounts,
@@ -83,6 +82,26 @@ export const FilterButtons = ({
     router.push(`${pathname}?${createQueryString("date", `${from.toISOString()} - ${to.toISOString()}`)}`)
   };
 
+  const handleSelectedAccountChange = (newSelectedAccount: string) => {
+    if (newSelectedAccount === 'All Accounts') {
+      router.push(`${pathname}?${createQueryString("account", "")}`)
+    } else {
+      router.push(`${pathname}?${createQueryString("account", newSelectedAccount)}`)
+    }
+  }
+
+  React.useEffect(() => {
+    const accountFromUrl = searchParams.get("account");
+    if (!accountFromUrl) {
+      setSelectedAccount("All Accounts");
+      router.push(`${pathname}?${createQueryString("account", "All Accounts")}`);
+    } else {
+      setSelectedAccount(accountFromUrl);
+    }
+  }, [searchParams, pathname, router, createQueryString]);
+
+  const accountFromUrl = searchParams.get("account");
+
   return (
     <div className="mt-4 flex md:flex-row flex-col gap-2">
       <DropdownMenu>
@@ -97,7 +116,10 @@ export const FilterButtons = ({
         <DropdownMenuContent className="max-w-fit">
           <DropdownMenuLabel>Filter Data By Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup value={selectedAccount} onValueChange={setSelectedAccount}>
+          <DropdownMenuRadioGroup value={accountFromUrl} onValueChange={(value) => {
+            handleSelectedAccountChange(value)
+            setSelectedAccount(value)
+          }}>
             <DropdownMenuRadioItem className="cursor-pointer" value="All Accounts">All Accounts</DropdownMenuRadioItem>
             {accounts.map((account) => (
               <DropdownMenuRadioItem key={account.id} className="cursor-pointer" value={`${account.name}`}>{account.name}</DropdownMenuRadioItem>

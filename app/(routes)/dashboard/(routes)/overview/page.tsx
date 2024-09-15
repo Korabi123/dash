@@ -44,8 +44,17 @@ const DashboardOverviewPage = async ({
       ? new Date(paramsDateRange.split(" - ")[1])
       : undefined;
 
-    // @ts-ignore
-    const secondMonthFromRangePlusTwoDays = new Date(secondMonthFromRange.getTime() + (2 * 24 * 60 * 60 * 1000));
+  const accountFromUrl = searchParams.account?.toString();
+
+  // @ts-ignore
+  const secondMonthFromRangePlusTwoDays = new Date(secondMonthFromRange.getTime() + (2 * 24 * 60 * 60 * 1000));
+
+  const accountFromName = await prismadb.account.findFirst({
+    where: {
+      name: accountFromUrl,
+      userId: currentClerkUser.id,
+    }
+  });
 
   const transactions = await prismadb.transaction.findMany({
     where: {
@@ -53,7 +62,8 @@ const DashboardOverviewPage = async ({
       createdAt: {
         lt: secondMonthFromRangePlusTwoDays,
         gte: firstMonthFromRange,
-      }
+      },
+      accountId: accountFromName?.id,
     },
     orderBy: {
       createdAt: "desc",
@@ -78,7 +88,8 @@ const DashboardOverviewPage = async ({
       createdAt: {
         lte: subtractedSecondMonth,
         gte: subtractedFirstMonth,
-      }
+      },
+      accountId: accountFromName?.id,
     },
     orderBy: {
       createdAt: "desc",

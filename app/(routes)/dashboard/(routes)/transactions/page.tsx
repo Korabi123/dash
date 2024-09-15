@@ -44,8 +44,17 @@ const TransactionsPage = async ({
       ? new Date(paramsDateRange.split(" - ")[1])
       : undefined;
 
+  const accountFromUrl = searchParams.account?.toString();
+
   // @ts-ignore
   const secondMonthFromRangePlusTwoDays = new Date(secondMonthFromRange.getTime() + (2 * 24 * 60 * 60 * 1000));
+
+  const accountFromName = await prismadb.account.findFirst({
+    where: {
+      name: accountFromUrl,
+      userId: currentClerkUser.id,
+    }
+  });
 
   const transactions = await prismadb.transaction.findMany({
     where: {
@@ -53,7 +62,8 @@ const TransactionsPage = async ({
       createdAt: {
         lt: secondMonthFromRangePlusTwoDays,
         gte: firstMonthFromRange,
-      }
+      },
+      accountId: accountFromName?.id,
     },
     orderBy: {
       createdAt: "desc",
