@@ -51,9 +51,15 @@ const AccountsPage = async ({
     }
   });
 
+  const allAccounts = await prismadb.account.findMany({
+    where: {
+      userId: currentClerkUser.id,
+    }
+  });
+
   return (
     <div className="ml-4 mb-12">
-      <FilterButtons accounts={accounts} />
+      <FilterButtons accounts={allAccounts} />
       <AccountsTable accounts={accounts} />
     </div>
   );
