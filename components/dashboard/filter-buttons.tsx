@@ -116,7 +116,7 @@ export const FilterButtons = ({
         <DropdownMenuContent className="max-w-fit">
           <DropdownMenuLabel>Filter Data By Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup value={accountFromUrl} onValueChange={(value) => {
+          <DropdownMenuRadioGroup value={accountFromUrl!} onValueChange={(value) => {
             handleSelectedAccountChange(value)
             setSelectedAccount(value)
           }}>
