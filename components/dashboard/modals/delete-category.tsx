@@ -74,7 +74,7 @@ export const DeleteCategoryModal = () => {
                   onOpen("secondConfirmationCategory", {
                     categoryId: data.categoryId,
                   });
-                }, 400);
+                }, 100);
               } else {
                 onDeleteCategory();
               }
