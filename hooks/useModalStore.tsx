@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 
-export type ModalStoreType = "createTransaction" | "editTransaction" | "deleteTransaction"
+export type ModalStoreType = "createTransaction" | "editTransaction" | "deleteTransaction" | "createAccount" | "editAccount" | "deleteAccount" | "createCategory" | "editCategory" | "deleteCategory";
 
 interface ModalStoreData {
   apiUrl?: string;
   query?: Record<string, any>;
   transactionId?: string;
+  accountId?: string;
+  categoryId?: string;
 }
 
 interface ModalStore {

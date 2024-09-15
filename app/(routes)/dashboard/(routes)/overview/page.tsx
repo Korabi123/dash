@@ -2,7 +2,8 @@ import { FilterButtons } from "@/components/dashboard/filter-buttons";
 import { InfoSection } from "@/components/dashboard/info-section";
 import prismadb from "@/lib/prismadb";
 import { currentUser } from "@clerk/nextjs/server";
-import { format } from "date-fns";
+import { addDays, format } from "date-fns";
+import { redirect } from "next/navigation";
 
 const DashboardOverviewPage = async ({
   params,
@@ -24,6 +25,18 @@ const DashboardOverviewPage = async ({
   });
 
   const paramsDateRange = searchParams.date?.toString();
+
+  const currentYear = new Date().getFullYear();
+  const currentMonthIndex = new Date().getMonth();
+  const currentDayOfMonth = new Date().getDate();
+
+  const from = new Date(currentYear, currentMonthIndex -1, currentDayOfMonth);
+  const to = addDays(new Date(currentYear, currentMonthIndex, currentDayOfMonth), 0);
+
+  if (!paramsDateRange) {
+    redirect(`/dashboard/overview?date=${from.toISOString()} - ${to.toISOString()}`);
+  }
+
     const firstMonthFromRange = paramsDateRange
       ? new Date(paramsDateRange.split(" - ")[0])
       : undefined;

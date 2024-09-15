@@ -3,6 +3,9 @@ import { CreateTransactionSheet } from "../dashboard/sheets/create-transaction";
 import prismadb from "@/lib/prismadb";
 import { EditTransactionSheet } from "../dashboard/sheets/edit-transaction";
 import { DeleteTransactionModal } from "../modals/delete-transaction";
+import { EditAccountSheet } from "../dashboard/sheets/edit-account";
+import { CreateAccountSheet } from "../dashboard/sheets/create-account";
+import { DeleteAccountModal } from "../modals/delete-account";
 
 export const ZustandProvider = async () => {
   const currentUserClerk = await currentUser();
@@ -25,9 +28,15 @@ export const ZustandProvider = async () => {
 
   return (
     <>
+      {/* Transactions */}
       <CreateTransactionSheet accounts={accounts} categories={categories} />
       <EditTransactionSheet accounts={accounts} categories={categories} />
       <DeleteTransactionModal />
+
+      {/* Accounts */}
+      <CreateAccountSheet />
+      <EditAccountSheet />
+      <DeleteAccountModal />
     </>
   )
 }

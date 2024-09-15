@@ -5,8 +5,16 @@ import { DataTable } from "../data-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightFromSquare, PlusIcon } from "lucide-react";
 import { accountColumns } from "@/types/account-columns";
+import { Account } from "@prisma/client";
+import { useModalStore } from "@/hooks/useModalStore";
 
-export const AccountsTable = () => {
+interface AccountsTableProps {
+  accounts: Account[];
+}
+
+export const AccountsTable = ({ accounts }: AccountsTableProps) => {
+  const { onOpen } = useModalStore();
+
   return (
     <DataTable
       title="Accounts"
@@ -15,7 +23,7 @@ export const AccountsTable = () => {
       columns={accountColumns}
       actions={
         <>
-          <Button className="bg-branding-primary gap-2 hover:bg-branding-primary/80 text-white">
+          <Button onClick={() => onOpen("createAccount")} className="bg-branding-primary gap-2 hover:bg-branding-primary/80 text-white">
             <span>
               <PlusIcon className="size-4" />
             </span>
@@ -23,20 +31,7 @@ export const AccountsTable = () => {
           </Button>
         </>
       }
-      data={[
-        {
-          id: "1",
-          name: "Checking",
-        },
-        {
-          id: "1",
-          name: "Savings",
-        },
-        {
-          id: "1",
-          name: "Morgage",
-        },
-      ]}
+      data={accounts}
     />
   );
 };

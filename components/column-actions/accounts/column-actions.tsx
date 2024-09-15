@@ -1,0 +1,39 @@
+"use client";
+
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
+
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { useModalStore } from "@/hooks/useModalStore";
+
+export const ColumnActions = ({ accountId }: { accountId: string }) => {
+  const { onOpen } = useModalStore();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuItem onClick={() => onOpen("editAccount", { accountId })} className="flex items-center gap-2 cursor-pointer">
+          <Edit className="h-4 w-4" />
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onOpen("deleteAccount", { accountId })} className="flex items-center gap-2 cursor-pointer">
+          <Trash className="h-4 w-4" />
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

@@ -2,6 +2,8 @@ import { FilterButtons } from "@/components/dashboard/filter-buttons";
 import { TransactionsTable } from "@/components/dashboard/tables/transactions-table";
 import prismadb from "@/lib/prismadb";
 import { currentUser } from "@clerk/nextjs/server";
+import { addDays } from "date-fns";
+import { redirect } from "next/navigation";
 
 const TransactionsPage = async ({
   params,
@@ -23,6 +25,18 @@ const TransactionsPage = async ({
   });
 
   const paramsDateRange = searchParams.date?.toString();
+
+  const currentYear = new Date().getFullYear();
+  const currentMonthIndex = new Date().getMonth();
+  const currentDayOfMonth = new Date().getDate();
+
+  const from = new Date(currentYear, currentMonthIndex -1, currentDayOfMonth);
+  const to = addDays(new Date(currentYear, currentMonthIndex, currentDayOfMonth), 0);
+
+  if (!paramsDateRange) {
+    redirect(`/dashboard/transactions?date=${from.toISOString()} - ${to.toISOString()}`);
+  }
+
     const firstMonthFromRange = paramsDateRange
       ? new Date(paramsDateRange.split(" - ")[0])
       : undefined;
