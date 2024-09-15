@@ -10,14 +10,22 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { Badge } from "@/components/ui/badge";
 import { ColumnActions } from "@/components/column-actions/column-actions";
+import { CategoryRow } from "@/components/row-actions/category-row";
+import { AccountRow } from "@/components/row-actions/account-row";
 
 export type Transaction = {
   id: string;
   date: string;
   payee: string;
   amount: number;
-  account: string;
-  category: string;
+  account: {
+    id: string;
+    name: string;
+  };
+  category: {
+    id: string;
+    name: string;
+  };
   isIncome: boolean;
 }
 
@@ -79,18 +87,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
       const transaction = row.original as Transaction;
 
       return (
-        <>
-          {!transaction.category ? (
-            <span className="inline-flex items-center gap-2 text-red-500">
-              <span>
-                <TriangleAlert className="text-red-500 size-4" />
-              </span>
-              <span>Uncategorized</span>
-            </span>
-          ): (
-            <span>{transaction.category}</span>
-          )}
-        </>
+        <CategoryRow category={transaction.category} />
       );
     },
   },
@@ -154,6 +151,13 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
+    },
+    cell: ({ row }) => {
+      const transaction = row.original as Transaction;
+
+      return (
+        <AccountRow account={transaction.account} />
+      );
     },
   },
 

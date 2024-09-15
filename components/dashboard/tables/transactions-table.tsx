@@ -34,8 +34,8 @@ export const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
       }),
       payee: transaction.payee,
       amount: transaction.amount,
-      account: transaction?.account?.name,
-      category: transaction.category?.name,
+      account: transaction?.account,
+      category: transaction.category,
       isIncome: transaction.amount > 0,
     };
   });
@@ -53,12 +53,6 @@ export const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
               <PlusIcon className="size-4" />
             </span>
             <span>Add new</span>
-          </Button>
-          <Button className="gap-2 bg-branding-primary hover:bg-branding-primary/80 text-white">
-            <span>
-              <ArrowUpRightFromSquare className="size-4" />
-            </span>
-            <span>Import</span>
           </Button>
         </>
       }

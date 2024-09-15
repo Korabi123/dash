@@ -72,14 +72,6 @@ export const DashboardHeader = () => {
             >
               Categories
             </Button>
-            <Button
-              variant={
-                pathname === "/dashboard/settings" ? "active" : "nonActive"
-              }
-              onClick={() => router.push("/dashboard/settings")}
-            >
-              Settings
-            </Button>
           </nav>
         </div>
         <div className="hidden md:block">
