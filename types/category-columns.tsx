@@ -14,16 +14,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge";
+import { ColumnActions } from "@/components/column-actions/categories/column-actions";
 
 // TODO: Use prisma types
 //? This is just a example type for the individual payment
 //? Later will be replaced with prisma types
-export type Account = {
+export type Category = {
   id: string;
   name: string;
 }
 
-export const categoryColumns: ColumnDef<Account>[] = [
+export const categoryColumns: ColumnDef<Category>[] = [
   {
     accessorKey: "select",
     header: ({ table }) => (
@@ -66,34 +67,10 @@ export const categoryColumns: ColumnDef<Account>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const account = row.original as Account;
+      const category = row.original as Category;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-                  onClick={() => navigator.clipboard.writeText(payment.id)}
-                >
-                  Copy payment ID
-                </DropdownMenuItem> */}
-            {/* <DropdownMenuSeparator /> */}
-            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-              <Trash className="h-4 w-4" />
-              Delete
-            </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-              <Edit className="h-4 w-4" />
-              Edit
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <ColumnActions categoryId={category.id} />
       );
     },
   },
@@ -202,7 +179,7 @@ export const categoryColumns: ColumnDef<Account>[] = [
 //     },
 //   },
 //   {
-//     accessorKey: "account",
+//     accessorKey: "category",
 //     header: ({ column }) => {
 //       return (
 //         <Button
@@ -210,7 +187,7 @@ export const categoryColumns: ColumnDef<Account>[] = [
 //           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 //           className="p-0"
 //         >
-//           Account
+//           Category
 //           <ArrowUpDown className="ml-2 h-4 w-4" />
 //         </Button>
 //       )

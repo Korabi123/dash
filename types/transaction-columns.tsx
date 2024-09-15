@@ -3,7 +3,7 @@
 import { useModalStore } from "@/hooks/useModalStore";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { ArrowUpDown, Edit, MoreHorizontal, Trash, TriangleAlert } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox";
@@ -74,6 +74,24 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
+    },
+    cell: ({ row }) => {
+      const transaction = row.original as Transaction;
+
+      return (
+        <>
+          {!transaction.category ? (
+            <span className="inline-flex items-center gap-2 text-red-500">
+              <span>
+                <TriangleAlert className="text-red-500 size-4" />
+              </span>
+              <span>Uncategorized</span>
+            </span>
+          ): (
+            <span>{transaction.category}</span>
+          )}
+        </>
+      );
     },
   },
   {

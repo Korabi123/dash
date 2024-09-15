@@ -12,16 +12,18 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { AccountWithTransactions } from "@/types/account-with-transactions";
 
-export const DeleteTransactionModal = () => {
+export const SecondConfirmationCategoryModal = () => {
   const router = useRouter();
   const { onClose, isOpen, type, data } = useModalStore();
-  const isDialogOpen = isOpen && type === "deleteTransaction";
+  const isDialogOpen = isOpen && type === "secondConfirmationCategory";
 
-  const onDeleteTransaction = async () => {
+  const onDeleteCategory = async () => {
     try {
-      await axios.delete(`/api/transactions/delete?transactionId=${data.transactionId}`);
-      toast.success("Transaction deleted successfully");
+      await axios.delete(`/api/categories/delete?categoryId=${data.categoryId}`);
+      toast.success("Category deleted successfully");
       onClose();
       router.refresh();
     } catch (error) {
@@ -35,21 +37,24 @@ export const DeleteTransactionModal = () => {
     <Dialog open={isDialogOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete Transaction?</DialogTitle>
+          <DialogTitle>Uncategorize Transactions?</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this transaction, this action cannot
-            be undone.
+            Once deleted, all transactions linked to this category will remain
+            uncategorized.
           </DialogDescription>
         </DialogHeader>
         <div className="mt-4 flex w-full justify-end gap-4">
           <Button variant={"outline"} onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={() => onDeleteTransaction()} className="bg-branding-primary hover:bg-branding-primary/80 text-white">
+          <Button
+            onClick={() => onDeleteCategory()}
+            className="bg-branding-primary hover:bg-branding-primary/80 text-white"
+          >
             Delete
           </Button>
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 };

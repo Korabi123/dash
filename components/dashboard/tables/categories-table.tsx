@@ -4,8 +4,16 @@ import { DataTable } from "../data-table";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { categoryColumns } from "@/types/category-columns";
+import { Category } from "@prisma/client";
+import { useModalStore } from "@/hooks/useModalStore";
 
-export const CategoriesTable = () => {
+interface CategoriesTableProps {
+  categories: Category[];
+}
+
+export const CategoriesTable = ({ categories }: CategoriesTableProps) => {
+  const { onOpen } = useModalStore();
+
   return (
     <DataTable
       title="Categories"
@@ -14,7 +22,7 @@ export const CategoriesTable = () => {
       columns={categoryColumns}
       actions={
         <>
-          <Button className="bg-branding-primary gap-2 hover:bg-branding-primary/80 text-white">
+          <Button onClick={() => onOpen("createCategory")} className="bg-branding-primary gap-2 hover:bg-branding-primary/80 text-white">
             <span>
               <PlusIcon className="size-4" />
             </span>
@@ -22,20 +30,7 @@ export const CategoriesTable = () => {
           </Button>
         </>
       }
-      data={[
-        {
-          id: "1",
-          name: "Rent",
-        },
-        {
-          id: "1",
-          name: "Food",
-        },
-        {
-          id: "1",
-          name: "Travel",
-        }
-      ]}
+      data={categories}
     />
   );
 };

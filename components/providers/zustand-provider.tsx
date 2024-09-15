@@ -2,10 +2,14 @@ import { currentUser } from "@clerk/nextjs/server";
 import { CreateTransactionSheet } from "../dashboard/sheets/create-transaction";
 import prismadb from "@/lib/prismadb";
 import { EditTransactionSheet } from "../dashboard/sheets/edit-transaction";
-import { DeleteTransactionModal } from "../modals/delete-transaction";
+import { DeleteTransactionModal } from "../dashboard/modals/delete-transaction";
 import { EditAccountSheet } from "../dashboard/sheets/edit-account";
 import { CreateAccountSheet } from "../dashboard/sheets/create-account";
-import { DeleteAccountModal } from "../modals/delete-account";
+import { DeleteAccountModal } from "../dashboard/modals/delete-account";
+import { DeleteCategoryModal } from "../dashboard/modals/delete-category";
+import { SecondConfirmationCategoryModal } from "../dashboard/modals/second-confirmation-category";
+import { CreateCategorySheet } from "../dashboard/sheets/create-category";
+import { EditCategorySheet } from "../dashboard/sheets/edit-category";
 
 export const ZustandProvider = async () => {
   const currentUserClerk = await currentUser();
@@ -37,6 +41,12 @@ export const ZustandProvider = async () => {
       <CreateAccountSheet />
       <EditAccountSheet />
       <DeleteAccountModal />
+
+      {/* Categories */}
+      <CreateCategorySheet />
+      <EditCategorySheet />
+      <DeleteCategoryModal />
+      <SecondConfirmationCategoryModal />
     </>
   )
 }
