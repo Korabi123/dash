@@ -27,6 +27,7 @@ import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Account } from "@prisma/client";
+import { toast } from "sonner";
 
 
 interface FilterButtonsProps {
@@ -61,12 +62,14 @@ export const FilterButtons = ({
     [searchParams]
   )
 
-  React.useEffect(() => {
-    if (date) {
-      // @ts-ignore
-      router.push(`${pathname}?${createQueryString("date", `${date.from.toISOString()} - ${date.to.toISOString()}`)}`)
+  const onApply = () => {
+    if (!date || !date.from || !date.to) {
+      toast.error("Please select a date range");
+      return null;
     }
-  }, [date, pathname, createQueryString, router]);
+
+    router.push(`${pathname}?${createQueryString("date", `${date.from.toISOString()} - ${date.to.toISOString()}`)}`)
+  }
 
   const onResetDate = () => {
     const from = new Date(currentYear, currentMonthIndex -1, currentDayOfMonth);
@@ -76,6 +79,8 @@ export const FilterButtons = ({
       from,
       to,
     });
+
+    router.push(`${pathname}?${createQueryString("date", `${from.toISOString()} - ${to.toISOString()}`)}`)
   };
 
   return (
@@ -139,8 +144,11 @@ export const FilterButtons = ({
             numberOfMonths={2}
           />
           <div className="mt-2 p-2 flex gap-2 items-center">
-            <Button onClick={onResetDate} variant={"outline"} className="w-full">
+            <Button onClick={onResetDate} variant={"outline"} className="w-1/2">
               Reset
+            </Button>
+            <Button onClick={onApply} className="bg-branding-primary hover:bg-branding-primary/80 text-white w-1/2">
+              Apply
             </Button>
           </div>
         </PopoverContent>
