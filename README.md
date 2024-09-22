@@ -18,12 +18,6 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 
@@ -51,7 +45,7 @@
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+Tools that make this project possible 🥳.
 
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
@@ -63,28 +57,26 @@ This section should list any major frameworks/libraries used to bootstrap your p
 ## Getting Started
 
 ### Prerequisites
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+_Have the latest installation of Node.Js
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/Korabi123/dash.git
    ```
 2. Install NPM packages
    ```sh
-   npm install
+   pnpm install
    ```
 3. Rename the `.env.example` to `.env` and fill in the values
-4. Change git remote url to avoid accidental pushes to base project
+4. Start the development preview
    ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
+   pnpm dev
+   ```
+5. (Optional) Start the database studio
+   ```sh
+   pnpm dlx prisma studio
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
