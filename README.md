@@ -38,7 +38,6 @@
 
 
 <!-- ABOUT THE PROJECT -->
-https://youtu.be/fG0eo6sqvXg?si=8WN-J2j81kBl0k_L
 ### Aboout the project
 [![Demo Video](https://img.youtube.com/vi/fG0eo6sqvXg/0.jpg)](https://www.youtube.com/watch?v=fG0eo6sqvXg)
 
