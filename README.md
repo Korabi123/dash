@@ -39,7 +39,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ### Aboout the project
-[![Demo Video](https://img.youtube.com/vi/fG0eo6sqvXg/0.jpg)](https://www.youtube.com/watch?v=fG0eo6sqvXg)
+[![Demo Video](https://github.com/Korabi123/dash/blob/master/youtube-preview.png?raw=true)](https://www.youtube.com/watch?v=fG0eo6sqvXg)
 
 
 
